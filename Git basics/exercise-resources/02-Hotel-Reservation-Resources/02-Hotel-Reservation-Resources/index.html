@@ -19,6 +19,64 @@
 
     <div class="site-content">
       <!-- Site Content -->
+      <div class="search-form-content custom-form">
+        <div class="background">
+          <div class="shape"></div>
+          <div class="shape"></div>
+        </div>
+
+        <form>
+          <h3>Search Here</h3>
+
+          <label for="check-in">Check-in:</label>
+          <input type="date" id="check-in" name="check-in" />
+
+          <label for="check-out">Check-ut:</label>
+          <input type="date" id="check-out" name="check-out" />
+
+          <label for="people">Number of people:</label>
+          <input type="number" min="1" id="people" name="people" value="1" />
+
+          <button id="search-form-btn">Next</button>
+        </form>
+      </div>
+
+      <div class="our-offers-content custom-form hidden">
+        <div class="background">
+          <div class="shape"></div>
+          <div class="shape"></div>
+        </div>
+
+        <form action="post">
+          <h3>Our offers</h3>
+
+          <section class="offers">
+            <article class="offer-card room-type selected-room">
+              <img src="/static/img/budgetRoom.jpg" alt="Budget Room" />
+
+              <h4>Budget Room - 120 USD</h4>
+            </article>
+
+            <article class="offer-card room-type">
+              <img src="/static/img/familyRoom.jpg" alt="Family Room" />
+
+              <h4>Family Room - 250 USD</h4>
+            </article>
+
+            <article class="offer-card room-type">
+              <img src="/static/img/kingRoom.jpg" alt="King Room" />
+
+              <h4>King Room - 500 USD</h4>
+            </article>
+          </section>
+		  
+		  <div class="buttons">
+              <button id="search-back-btn">Back</button>
+              <button id="search-next-btn">Next</button>
+            </div>
+        </form>
+      </div>
+
       <!-- Thank you, page! -->
       <div class="thank-you-content custom-form">
         <div class="background">

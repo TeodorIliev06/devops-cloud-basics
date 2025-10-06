@@ -31,7 +31,7 @@
           <label for="check-in">Check-in:</label>
           <input type="date" id="check-in" name="check-in" />
 
-          <label for="check-out">Check-ut:</label>
+          <label for="check-out">Check-out:</label>
           <input type="date" id="check-out" name="check-out" />
 
           <label for="people">Number of people:</label>
@@ -52,7 +52,7 @@
 
           <section class="offers">
             <article class="offer-card room-type selected-room">
-              <img src= "static/img/budgetRoom.jpg" alt="Budget Room" />
+              <img src="static/img/budgetRoom.jpg" alt="Budget Room" />
 
               <h4>Budget Room - 120 USD</h4>
             </article>
@@ -98,6 +98,31 @@
           <div class="buttons">
             <button id="guest-details-back-btn">Back</button>
             <button id="guest-details-next-btn">Next</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="confirm-reservation-content custom-form hidden">
+        <div class="background">
+          <div class="shape"></div>
+          <div class="shape"></div>
+        </div>
+
+        <form>
+          <h3>Confirm Reservation</h3>
+
+          <article class="confirm-reservation">
+            <h4 id="guest-name">Name: Demo User</h4>
+            <h4 id="guest-phone-number">123456789</h4>
+            <h4 id="guest-email">demo@abv.bg</h4>
+            <h4 id="guest-room-type">Budget Room - 120 USD</h4>
+            <h4 id="guest-check-in-date">Date in: 2023-06-10</h4>
+            <h4 id="guest-check-out-date">Date out: 2023-06-16</h4>
+          </article>
+
+          <div class="buttons">
+            <button id="confirm-back-btn">Back</button>
+            <button id="confirm-reservation">Confirm</button>
           </div>
         </form>
       </div>

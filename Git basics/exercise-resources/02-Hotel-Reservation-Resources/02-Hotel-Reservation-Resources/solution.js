@@ -40,6 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", (e) => getPersonalData(e));
 
   document
+    .querySelector("#confirm-back-btn")
+    .addEventListener("click", (e) => getBackToPersonalData(e));
+
+  document
+    .querySelector("#confirm-reservation")
+    .addEventListener("click", (e) => showThanksPage(e));
+
+  document
     .querySelector("#new-reservation")
     .addEventListener("click", (e) => cleanData(e));
 });
@@ -131,5 +139,34 @@ function getPersonalData(e) {
     reservation.phone = phoneNumber;
     reservation.email = email;
 
-    // changeContent
+    changeContent("confirm-reservation-content");
+    fillConfirmReservationData(reservation);
   }
+}
+
+function fillConfirmReservationData(reservationData) {
+  document.getElementById("guest-name").textContent =
+    `Name ${reservationData.name}` || "N/A";
+  document.getElementById("guest-phone-number").textContent =
+    `Phone Number ${reservationData.phone}` || "N/A";
+  document.getElementById("guest-email").textContent =
+    `Email ${reservationData.email}` || "N/A";
+  document.getElementById("guest-room-type").textContent =
+    `Room Type ${reservationData.roomType}` || "N/A";
+  document.getElementById("guest-check-in-date").textContent =
+    `Date-in ${reservationData.startDate}` || "N/A";
+  document.getElementById("guest-check-out-date").textContent =
+    `Date-out ${reservationData.endDate}` || "N/A";
+}
+
+function getBackToPersonalData(e) {
+  e.preventDefault();
+
+  changeContent("guest-details-form-content");
+}
+
+function showThanksPage(e) {
+  e.preventDefault();
+
+  changeContent("thank-you-content");
+}

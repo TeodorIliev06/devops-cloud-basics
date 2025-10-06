@@ -11,48 +11,31 @@ let reservation = {
 document.addEventListener("DOMContentLoaded", () => {
   changeContent("search-form-content");
 
-  document
-    .getElementById("search-form-btn")
-    .addEventListener("click", (e) => {
-		searchFormData(e);
-	});
-
-  function changeContent(className) {
-    document
-      .querySelectorAll(".custom-form")
-      .forEach((div) => div.classList.add("hidden"));
-    if (document.querySelector(`.${className}`) != null) {
-      document.querySelector(`.${className}`).classList.remove("hidden");
-    }
-  }
+  document.getElementById("search-form-btn").addEventListener("click", (e) => {
+    searchFormData(e);
+  });
 
   document
     .querySelector("#new-reservation")
     .addEventListener("click", (e) => cleanData(e));
 
-  function cleanData(e) {
-    changeContent("search-form-content");
-  }
+  document
+    .querySelector("#search-back-btn")
+    .addEventListener("click", (e) => fillSearchForm(e));
 
-  function searchFormData(e) {
+  document.querySelectorAll(".room-type").forEach((room) => {
+    room.addEventListener("click", (e) => selectRoomType(e));
+  });
+
+  document
+    .querySelector("#search-next-btn")
+    .addEventListener("click", (e) => findRoom(e));
+
+  function findRoom(e) {
     e.preventDefault();
 
-    const checkIn = document.getElementById("check-in").value;
-    const checkOut = document.getElementById("check-out").value;
-    const numberOfPeople = document.getElementById("people").value;
-
-    if (
-      checkIn != "" &&
-      checkOut != "" &&
-      numberOfPeople != "" &&
-      new Date(checkIn) <= new Date(checkOut)
-    ) {
-      reservation.startDate = checkIn;
-      reservation.endDate = checkOut;
-      reservation.guestsCount = numberOfPeople;
-
-      //changeContent("search-result-form-content");
-    }
+    const roomInfo = document.querySelector(".selected-room h4").textContent;
+    reservation.roomType = roomInfo;
   }
 
   /*
@@ -93,3 +76,61 @@ function fillConfirmReservationData(customReservation) {
 }
 */
 });
+
+function changeContent(className) {
+  document
+    .querySelectorAll(".custom-form")
+    .forEach((div) => div.classList.add("hidden"));
+  if (document.querySelector(`.${className}`) != null) {
+    document.querySelector(`.${className}`).classList.remove("hidden");
+  }
+}
+
+function cleanData(e) {
+  changeContent("search-form-content");
+}
+
+function selectRoomType(e) {
+  e.preventDefault();
+
+  let myTarget = undefined;
+  if (e.target.querySelector("img") != null) {
+    myTarget = e.target;
+  } else {
+    myTarget = e.target.parentElement;
+  }
+
+  document
+    .querySelectorAll(".room-type")
+    .forEach((room) => room.classList.remove("selected-room"));
+  myTarget.classList.add("selected-room");
+}
+
+function fillSearchForm(e) {
+  e.preventDefault();
+  changeContent("search-form-content");
+  document.querySelector("#check-in").value = reservation.startDate;
+  document.querySelector("#check-out").value = reservation.endDate;
+  document.querySelector("#people").value = reservation.guestsCount;
+}
+
+function searchFormData(e) {
+  e.preventDefault();
+
+  const checkIn = document.getElementById("check-in").value;
+  const checkOut = document.getElementById("check-out").value;
+  const numberOfPeople = document.getElementById("people").value;
+
+  if (
+    checkIn != "" &&
+    checkOut != "" &&
+    numberOfPeople != "" &&
+    new Date(checkIn) <= new Date(checkOut)
+  ) {
+    reservation.startDate = checkIn;
+    reservation.endDate = checkOut;
+    reservation.guestsCount = numberOfPeople;
+
+    changeContent("our-offers-content");
+  }
+}

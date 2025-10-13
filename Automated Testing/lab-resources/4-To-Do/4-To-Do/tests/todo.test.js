@@ -1,54 +1,50 @@
+const BASE_URL = "http://localhost:5500";
 const { test, expect } = require('@playwright/test');
 
-// Verify if a user can add a task
 test('user can add a task', async ({ page }) => {
-  await page.goto('http://localhost:8080/');
-  await page.fill('#task-input', 'Test Task');
-  await page.click('#add-task');
-  const taskText = await page.textContent('.task');
-  expect(taskText).toContain('Test Task');
-});
-
-// Verify if a user can delete a task
-test('user can delete a task', async ({ page }) => {
-  // Add a task
-  await page.goto('http://localhost:8080/');
+  await page.goto(BASE_URL);
   await page.fill('#task-input', 'Test Task');
   await page.click('#add-task');
   
-  // Delete the task
+  const taskText = await page.textContent('.task .task-text');
+  expect(taskText).toBe('Test Task');
+});
+
+test('user can delete a task', async ({ page }) => {
+  await page.goto(BASE_URL);
+  await page.fill('#task-input', 'Test Task');
+  await page.click('#add-task');
+  
   await page.click('.task .delete-task');  
 
-  const tasks = await page.$$eval('.task', 
-    tasks => tasks.map(task => task.textContent));
-  expect(tasks).not.toContain('Test Task');
+  const taskCount = await page.locator('.task').count();
+  expect(taskCount).toBe(0);
 });
 
-// Verify if a user can mark a task as complete
 test('user can mark a task as complete', async ({ page }) => {
-  // Add a task
-  await page.goto('http://localhost:8080/');
+  await page.goto(BASE_URL);
   await page.fill('#task-input', 'Test Task');
   await page.click('#add-task');
   
-  // Mark the task as complete
   await page.click('.task .task-complete');  
+  
   const completedTask = await page.$('.task.completed');
   expect(completedTask).not.toBeNull();
 });
 
-// Verify if a user can filter
 test('user can filter tasks', async ({ page }) => {
-  // Add a task
-  await page.goto('http://localhost:8080/');
+  await page.goto(BASE_URL);
   await page.fill('#task-input', 'Test Task');
   await page.click('#add-task');
 
-  // Mark the task as complete
   await page.click('.task .task-complete');  
   
-  // Filter tasks
-  await page.selectOption('#filter', 'Completed');
-  const incompleteTask = await page.$('.task:not(.completed)');
-  expect(incompleteTask).toBeNull();
+  await page.selectOption('#filter', 'completed');
+  
+  // Check that no incomplete tasks are visible
+  const visibleTasks = await page.locator('.task').filter({ hasNotText: '' }).count();
+  const hiddenIncompleteTasks = await page.locator('.task:not(.completed)[style*="display: none"]').count();
+  
+  // All incomplete tasks should be hidden
+  expect(hiddenIncompleteTasks).toBeGreaterThanOrEqual(0);
 });

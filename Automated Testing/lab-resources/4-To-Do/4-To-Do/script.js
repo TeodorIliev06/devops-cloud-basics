@@ -9,8 +9,13 @@ addTaskButton.addEventListener('click', () => {
     if (taskInput.value.trim() === '') return;
     const li = document.createElement('li');
     li.className = 'task';
-    li.textContent = taskInput.value;
-    li.id = `task-${taskId}`;  
+    li.id = `task-${taskId}`;
+    
+    const taskSpan = document.createElement('span');
+    taskSpan.classList.add('task-text');
+    taskSpan.textContent = taskInput.value;
+    
+    li.appendChild(taskSpan)
     
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';

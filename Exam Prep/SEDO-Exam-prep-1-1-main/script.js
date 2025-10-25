@@ -20,7 +20,7 @@ function calculateAndDisplay(functionName) {
   }
 
   const a = Number(rawA);
-  const b = Number(document.getElementById(rawB).value);
+  const b = Number(rawB);
   document.getElementById("result").textContent = functionName(a, b);
 }
 
@@ -28,6 +28,10 @@ document.getElementById("btn-add").addEventListener("click", () => {
   calculateAndDisplay(add);
 });
 
-document.getElementById('btn-subtract').addEventListener('click', () => {
+document.getElementById("btn-subtract").addEventListener("click", () => {
   calculateAndDisplay(subtract);
+});
+
+document.getElementById("btn-multiply").addEventListener("click", () => {
+  calculateAndDisplay(multiply);
 });

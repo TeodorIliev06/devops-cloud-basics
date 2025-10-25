@@ -24,6 +24,10 @@
       assert.equal(subtract(0, 4), -4, '0 - 4 = -4');
     });
 
+    QUnit.test('multiply()', assert => {
+      assert.equal(multiply(2, 3), 6, '2 × 3 = 6');
+    });
+
     QUnit.test('subtract with empty inputs', assert => {
       document.getElementById('a').value = '';
       document.getElementById('b').value = '';

@@ -81,6 +81,97 @@ Result: Instant error summary from all servers in seconds!
     
 - **Misconception 5:** "All Linux distributions work the same" → **Truth:** Different distros have different package managers, file locations, and default configurations
 
+## 📊 Process/Steps (if applicable)
+
+### Basic Workflow for File Operations:
+
+1. **Navigate:** Use `pwd` to see where you are, `ls` to see what's there
+    
+    ```bash
+    pwd           # Print working directory
+    ls -al        # List all files with details
+    ```
+    
+2. **Move around:** Use `cd` to change directories
+    
+    ```bash
+    cd /home/user     # Absolute path
+    cd ../documents   # Relative path
+    ```
+    
+3. **Manipulate files:** Create, copy, move, delete
+    
+    ```bash
+    mkdir new_folder          # Create directory
+    cp source.txt dest.txt    # Copy file
+    mv old.txt new.txt        # Rename/move
+    rm unwanted.txt           # Delete
+    ```
+    
+4. **View content:** Read files without opening editors
+    
+    ```bash
+    cat file.txt              # Show entire file
+    head -n 5 file.txt        # First 5 lines
+    tail -n 10 file.txt       # Last 10 lines
+    ```
+    
+5. **Combine commands:** Use pipes and redirects
+    
+    ```bash
+    ls | sort | head -n 3     # List, sort, show top 3
+    echo "Hello" > file.txt   # Write to file (overwrite)
+    echo "World" >> file.txt  # Append to file
+    ```
+    
+
+## 🛠️ Tools & Technologies
+
+**Linux Distributions:**
+
+- **Ubuntu:** Beginner-friendly, large community, stable for desktops and servers
+- **Alpine:** Tiny (5MB!), secure, used in Docker containers
+- **CentOS/Rocky:** Enterprise-grade, stable, used in corporate environments
+- **Debian:** Rock-solid, reliable, basis for Ubuntu
+
+**Shells:**
+
+- **Bash:** Most common, default on many systems
+- **Zsh:** Modern, powerful features, customizable
+- **Fish:** User-friendly, great autocomplete
+
+**Tools Mentioned:**
+
+- **Docker Playground:** Online Linux environment for practice
+- **SSH:** Secure remote access to Linux servers
+- **top:** Monitor running processes and resource usage
+
+---
+
+## 🧪 Practice Question
+
+**Q:** You have a log file called `app.log` with 1000 lines. You want to:
+
+1. Find all lines containing the word "ERROR"
+2. Save only the last 20 error messages to a new file called `recent_errors.txt`
+3. Display those 20 lines on screen
+
+**Step-by-step reasoning:**
+
+1. Use `grep` to filter lines with "ERROR"
+2. Use `tail` to get only the last 20 matches
+3. Use `>` to save to file AND `cat` to display
+
+**Solution:**
+
+```bash
+# Option 1: Two commands
+grep "ERROR" app.log | tail -n 20 > recent_errors.txt
+cat recent_errors.txt
+```
+
+The pipe `|` connects commands, passing output of one as input to the next!
+
 ## 💭 Personal Notes
 
 **Key insights:**

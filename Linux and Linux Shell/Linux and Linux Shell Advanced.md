@@ -241,3 +241,62 @@ Without understanding users/permissions/SSH/processes, you couldn't safely deplo
 
 ---
 
+## 🧪 Practice Question
+
+**Q:** You have a script called `deploy.sh` that needs to:
+
+1. Be owned by user `devops` and group `developers`
+2. Be executable by the owner and group, but only readable by others
+3. Connect to a remote server (192.168.1.50) as user `admin` and restart a service
+
+Write the commands to set this up and execute it.
+
+**Step-by-step reasoning:**
+
+1. Change ownership → use `chown`
+2. Set permissions → rwx for owner, r-x for group, r-- for others → 754
+3. SSH command with remote execution → `ssh user@host "command"`
+
+**Solution:**
+
+```bash
+# Step 1: Change owner and group
+sudo chown devops:developers deploy.sh
+
+# Step 2: Set permissions (754 = rwxr-xr--)
+chmod 754 deploy.sh
+
+# Step 3: Execute the script
+./deploy.sh
+
+# Inside deploy.sh:
+#!/bin/bash
+ssh admin@192.168.1.50 "sudo systemctl restart myapp.service"
+```
+
+**Octal breakdown for 754:**
+
+- 7 (owner) = 4+2+1 = read+write+execute
+- 5 (group) = 4+0+1 = read+execute
+- 4 (others) = 4+0+0 = read only
+
+## 💭 Personal Notes
+
+**Mental shortcut for octal:**
+
+- 4 = read (r)
+- 2 = write (w)
+- 1 = execute (x)
+- Add them up: 7=rwx, 6=rw-, 5=r-x, 4=r--, 0=---
+
+**Security principle:**
+
+- **Least privilege:** Give minimum permissions needed, nothing more
+- Never run as root unless absolutely necessary
+- Never use 777 permissions on production systems
+
+**Questions to explore:**
+
+- How do SSH keys work vs passwords?
+- How do I make environment variables permanent?
+- What's the difference between `kill -9` and regular `kill`?

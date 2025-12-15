@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 80
 
-ENTRYPOINT ["node", "start"]
+ENTRYPOINT ["npm", "start"]

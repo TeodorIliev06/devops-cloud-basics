@@ -15,12 +15,12 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "arg" {
-  name     = "WatchlistResourceGroup"
-  location = "Poland Central"
+  name     = var.resource_group_name
+  location = var.location
 }
 
 resource "azurerm_service_plan" "asp" {
-  name                = "WatchlistServicePlan"
+  name                = var.service_plan_name
   resource_group_name = azurerm_resource_group.arg.name
   location            = azurerm_resource_group.arg.location
   os_type             = "Linux"
@@ -28,7 +28,7 @@ resource "azurerm_service_plan" "asp" {
 }
 
 resource "azurerm_linux_web_app" "alwa" {
-  name                = "WatchlistLinuxWebApp"
+  name                = var.web_app_name
   resource_group_name = azurerm_resource_group.arg.name
   location            = azurerm_service_plan.asp.location
   service_plan_id     = azurerm_service_plan.asp.id
@@ -52,16 +52,16 @@ resource "azurerm_linux_web_app" "alwa" {
 }
 
 resource "azurerm_mssql_server" "sqlserver" {
-  name                         = "watchlistsqlserverdemo"
+  name                         = var.sql_server_name
   resource_group_name          = azurerm_resource_group.arg.name
   location                     = azurerm_resource_group.arg.location
   version                      = "12.0"
-  administrator_login          = "4dm1n157r470r"
-  administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+  administrator_login          = var.admin_login
+  administrator_login_password = var.admin_login_password
 }
 
 resource "azurerm_mssql_database" "database" {
-  name                 = "watchlistdb"
+  name                 = var.sql_database_name
   server_id            = azurerm_mssql_server.sqlserver.id
   collation            = "SQL_Latin1_General_CP1_CI_AS"
   license_type         = "LicenseIncluded"
@@ -77,7 +77,7 @@ resource "azurerm_mssql_database" "database" {
 }
 
 resource "azurerm_mssql_firewall_rule" "example" {
-  name             = "FirewallRule1"
+  name             = var.firewall_name
   server_id        = azurerm_mssql_server.sqlserver.id
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
@@ -85,7 +85,7 @@ resource "azurerm_mssql_firewall_rule" "example" {
 
 resource "azurerm_app_service_source_control" "example" {
   app_id                 = azurerm_linux_web_app.alwa.id
-  repo_url               = "https://github.com/TeodorIliev06/devops-cloud-basics"
+  repo_url               = var.github_repo_url
   branch                 = "main"
   use_manual_integration = true
 }
